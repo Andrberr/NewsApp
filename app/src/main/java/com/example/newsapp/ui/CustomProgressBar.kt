@@ -31,9 +31,9 @@ class CustomProgressBar @JvmOverloads constructor(
 
         val oval = RectF().apply {
             left = (width / 2 - width / 12).toFloat()
-            top = (height / 2 - height / 23).toFloat()
+            top = (height / 2 - height / 18).toFloat()
             right = (width / 2 + width / 12).toFloat()
-            bottom = (height / 2 + height / 23).toFloat()
+            bottom = (height / 2 + height / 18).toFloat()
         }
 
         canvas.drawArc(oval, 135F, 270F, false, paint)

@@ -1,19 +1,16 @@
 package com.example.newsapp.ui
 
-import android.animation.ObjectAnimator
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.NewsApp
 import com.example.newsapp.R
-import com.example.newsapp.data.di.ViewModelFactory
+import com.example.newsapp.di.ViewModelFactory
 import com.example.newsapp.databinding.ActivityMainBinding
 import javax.inject.Inject
 

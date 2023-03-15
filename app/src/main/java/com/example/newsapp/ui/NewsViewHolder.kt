@@ -2,8 +2,8 @@ package com.example.newsapp.ui
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.domain.models.News
 import com.example.newsapp.databinding.NewsLayoutBinding
-import com.example.newsapp.domain.models.News
 
 class NewsViewHolder(private val newsLayoutBinding: NewsLayoutBinding, private val itemClick: (String) -> Unit) :
     RecyclerView.ViewHolder(newsLayoutBinding.root) {

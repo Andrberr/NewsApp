@@ -4,12 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsapp.R
-import com.example.newsapp.domain.Repository
-import com.example.newsapp.domain.models.News
+import com.example.domain.Repository
+import com.example.domain.models.News
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 class NewsViewModel @Inject constructor(
