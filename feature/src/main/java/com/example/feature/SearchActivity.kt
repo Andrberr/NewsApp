@@ -26,7 +26,6 @@ class SearchActivity : AppCompatActivity() {
         val editText = findViewById<EditText>(R.id.editText)
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // Вызывается перед тем, как текст изменится
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -34,7 +33,6 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                // Вызывается после того, как текст изменился
             }
         })
 

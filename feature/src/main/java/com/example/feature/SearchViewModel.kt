@@ -11,11 +11,11 @@ import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
     private val repository: Repository
-): ViewModel() {
+) : ViewModel() {
     private val _newsLiveData = MutableLiveData<List<News>>()
     val newsLiveData: LiveData<List<News>> get() = _newsLiveData
 
-    fun getNewsList(category: String){
+    fun getNewsList(category: String) {
         viewModelScope.launch {
             _newsLiveData.value = repository.getNewsList(true, category)
         }
