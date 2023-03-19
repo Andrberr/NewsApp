@@ -4,22 +4,26 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsapp.NewsApp
 import com.example.newsapp.R
+import com.example.newsapp.di.ViewModelFactory
 import com.example.newsapp.databinding.ActivityMainBinding
-import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val newsViewModel by viewModels<NewsViewModel>()
+    @Inject
+    lateinit var factory: ViewModelFactory
+    private val newsViewModel: NewsViewModel by viewModels { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (applicationContext as NewsApp).appComponent.inject(this)
         super.onCreate(savedInstanceState)
+
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewmodel = newsViewModel
@@ -40,10 +44,6 @@ class MainActivity : AppCompatActivity() {
             adapter.setNews(it)
         }
         newsViewModel.getNewsList()
-
-        newsViewModel.errorLiveData.observe(this) {
-            Toast.makeText(this, getString(it), Toast.LENGTH_SHORT).show()
-        }
 
         newsViewModel.setToken("5193158c81d94ee7a0ce2981761b87d9")
     }
