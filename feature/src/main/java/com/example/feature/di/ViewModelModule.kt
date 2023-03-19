@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.core.ViewModelFactory
 import com.example.core.ViewModelKey
-import com.example.feature.SecondViewModel
+import com.example.feature.SearchViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -17,6 +17,6 @@ interface ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SecondViewModel::class)
-    fun bindSecondViewModel(viewModel: SecondViewModel): ViewModel
+    @ViewModelKey(SearchViewModel::class)
+    fun bindSecondViewModel(viewModel: SearchViewModel): ViewModel
 }

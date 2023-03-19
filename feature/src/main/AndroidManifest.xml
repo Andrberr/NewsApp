@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name=".SecondActivity"
+            android:name=".SearchActivity"
             android:exported="false" />
     </application>
 

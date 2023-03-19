@@ -1,7 +1,7 @@
 package com.example.newsapp.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.example.newsapp.di.ViewModelKey
+import com.example.core.ViewModelKey
 import com.example.newsapp.ui.NewsViewModel
 import dagger.Binds
 import dagger.Module
