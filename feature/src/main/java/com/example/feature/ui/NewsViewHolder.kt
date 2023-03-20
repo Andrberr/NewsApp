@@ -1,4 +1,4 @@
-package com.example.feature
+package com.example.feature.ui
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name=".SearchActivity"
+            android:name=".ui.SearchActivity"
             android:exported="false" />
     </application>
 

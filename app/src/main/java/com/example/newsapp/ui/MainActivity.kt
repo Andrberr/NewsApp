@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.ViewModelFactory
-import com.example.feature.SearchActivity
+import com.example.feature.ui.SearchActivity
 import com.example.newsapp.NewsApp
 import com.example.newsapp.R
 import com.example.newsapp.databinding.ActivityMainBinding
