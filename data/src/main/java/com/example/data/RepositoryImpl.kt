@@ -17,11 +17,11 @@ class RepositoryImpl @Inject constructor(
     private val dataBaseSource: DataBaseSource
 ) : Repository {
 
-    override suspend fun getNewsList(cache: Boolean): List<News> {
+    override suspend fun getNewsList(cache: Boolean, category: String): List<News> {
         return withContext(Dispatchers.IO) {
             if (cache) {
                 val response =
-                    service.getNewsResponse("apple", userDataSource.getUserToken()).execute().body()
+                    service.getNewsResponse(category, userDataSource.getUserToken()).execute().body()
                         ?: throw Exception()
                 val newsList = (response.list ?: listOf()).map { newsMapper.responseToEntity(it) }
                 dataBaseSource.delete(dataBaseSource.getAll())

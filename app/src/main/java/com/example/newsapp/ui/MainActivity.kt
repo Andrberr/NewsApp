@@ -4,13 +4,15 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.ViewModelFactory
+import com.example.feature.ui.SearchActivity
 import com.example.newsapp.NewsApp
 import com.example.newsapp.R
-import com.example.newsapp.di.ViewModelFactory
 import com.example.newsapp.databinding.ActivityMainBinding
 import javax.inject.Inject
 
@@ -46,5 +48,9 @@ class MainActivity : AppCompatActivity() {
         newsViewModel.getNewsList()
 
         newsViewModel.setToken("5193158c81d94ee7a0ce2981761b87d9")
+
+        findViewById<Button>(R.id.searchButton).setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
+        }
     }
 }

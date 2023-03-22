@@ -24,7 +24,7 @@ class NewsViewModel @Inject constructor(
 
     private val handler = CoroutineExceptionHandler { _, _ ->
         viewModelScope.launch {
-            val newsList = repository.getNewsList(false)
+            val newsList = repository.getNewsList(false, "apple")
             if (newsList.isNotEmpty()) _newsLiveData.value = newsList
             _errorLiveData.value = true
             _loadingLiveData.value = false
@@ -35,7 +35,7 @@ class NewsViewModel @Inject constructor(
         _loadingLiveData.value = true
         _errorLiveData.value = false
         viewModelScope.launch(handler) {
-            _newsLiveData.value = repository.getNewsList(true)
+            _newsLiveData.value = repository.getNewsList(true, "apple")
             _loadingLiveData.value = false
         }
     }
