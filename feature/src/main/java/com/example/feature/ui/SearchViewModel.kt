@@ -14,12 +14,17 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
-    private val _newsLiveData = MutableLiveData<List<News>>()
-    val newsLiveData: LiveData<List<News>> get() = _newsLiveData
 
-    fun getNewsList(category: String) {
-        viewModelScope.launch {
-            _newsLiveData.value = repository.getNewsList(category)
-        }
+    private val trigger = MutableStateFlow("")
+    fun setQuery(query: String) {
+        trigger.value = query
     }
+
+    val results: StateFlow<List<News>> = trigger
+        .mapLatest { query -> repository.getNewsList(query) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = emptyList()
+        )
 }
