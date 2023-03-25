@@ -1,11 +1,13 @@
 package com.example.feature.ui
 
+import android.app.appsearch.SearchResult
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.Repository
 import com.example.domain.models.News
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,7 +19,7 @@ class SearchViewModel @Inject constructor(
 
     fun getNewsList(category: String) {
         viewModelScope.launch {
-            _newsLiveData.value = repository.getNewsList(true, category)
+            _newsLiveData.value = repository.getNewsList(category)
         }
     }
 }

@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.ViewModelFactory
 import com.example.core.findDependencies
 import com.example.feature.R
 import com.example.feature.di.DaggerFeatureComponent
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SearchActivity : AppCompatActivity() {

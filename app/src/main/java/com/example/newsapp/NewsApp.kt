@@ -5,7 +5,7 @@ import com.example.core.HasDependencies
 import com.example.newsapp.di.ApplicationComponent
 import com.example.newsapp.di.DaggerApplicationComponent
 
-class NewsApp : Application(), HasDependencies{
+class NewsApp : Application(), HasDependencies {
     val appComponent: ApplicationComponent by lazy {
         DaggerApplicationComponent.factory().create(applicationContext)
     }

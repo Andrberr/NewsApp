@@ -22,25 +22,23 @@ class NewsViewModel @Inject constructor(
     private val _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> get() = _loadingLiveData
 
-    private val handler = CoroutineExceptionHandler { _, _ ->
-        viewModelScope.launch {
-            val newsList = repository.getNewsList(false, "apple")
-            if (newsList.isNotEmpty()) _newsLiveData.value = newsList
-            _errorLiveData.value = true
-            _loadingLiveData.value = false
-        }
-    }
+//    private val handler = CoroutineExceptionHandler { _, _ ->
+//        viewModelScope.launch {
+//            val newsList = repository.getNewsList(false, "apple")
+//            if (newsList.isNotEmpty()) _newsLiveData.value = newsList
+//            _errorLiveData.value = true
+//            _loadingLiveData.value = false
+//        }
+//    }
 
     fun getNewsList() {
         _loadingLiveData.value = true
         _errorLiveData.value = false
-        viewModelScope.launch(handler) {
-            _newsLiveData.value = repository.getNewsList(true, "apple")
-            _loadingLiveData.value = false
+        viewModelScope.launch {
+            repository.getNewsListFlow("apple").collect{
+                _newsLiveData.value = it
+                _loadingLiveData.value = false
+            }
         }
-    }
-
-    fun setToken(token: String) {
-        repository.setToken(token)
     }
 }

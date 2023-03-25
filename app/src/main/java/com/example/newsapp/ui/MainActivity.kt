@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
         newsViewModel.getNewsList()
 
-        newsViewModel.setToken("5193158c81d94ee7a0ce2981761b87d9")
+        //newsViewModel.setToken("5193158c81d94ee7a0ce2981761b87d9")
 
         findViewById<Button>(R.id.searchButton).setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))
