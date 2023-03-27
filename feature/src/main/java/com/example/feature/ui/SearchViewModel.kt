@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.Repository
 import com.example.domain.models.News
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,7 +22,10 @@ class SearchViewModel @Inject constructor(
     }
 
     val results: StateFlow<List<News>> = trigger
-        .mapLatest { query -> repository.getNewsList(query) }
+        .mapLatest { query ->
+            delay(2000)
+            repository.getNewsList(query)
+        }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),

@@ -36,22 +36,22 @@ class SearchActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
+        this.lifecycleScope.launch {
+            searchViewModel.results
+                .flowWithLifecycle(
+                    this@SearchActivity.lifecycle,
+                    Lifecycle.State.STARTED
+                )
+                .distinctUntilChanged()
+                .collect { list ->
+                    newsAdapter.setNews(list)
+                }
+        }
+
         val editText = findViewById<EditText>(R.id.editText)
         editText.addTextChangedListener { text ->
             if (text.toString() != "") {
                 searchViewModel.setQuery(text.toString())
-                this.lifecycleScope.launch {
-                    delay(2000)
-                    searchViewModel.results
-                        .flowWithLifecycle(
-                            this@SearchActivity.lifecycle,
-                            Lifecycle.State.STARTED
-                        )
-                        .distinctUntilChanged()
-                        .collect { list ->
-                            newsAdapter.setNews(list)
-                        }
-                }
             } else newsAdapter.setNews(emptyList())
         }
     }
