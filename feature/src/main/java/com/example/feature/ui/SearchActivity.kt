@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +14,8 @@ import com.example.core.ViewModelFactory
 import com.example.core.findDependencies
 import com.example.feature.R
 import com.example.feature.di.DaggerFeatureComponent
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,11 +29,6 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        val editText = findViewById<EditText>(R.id.editText)
-        editText.addTextChangedListener { text ->
-            if (text.toString() != "") searchViewModel.getNewsList(text.toString())
-        }
-
         val recycler = findViewById<RecyclerView>(R.id.recycler)
         val newsAdapter = NewsAdapter()
         with(recycler) {
@@ -37,8 +36,23 @@ class SearchActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
-        searchViewModel.newsLiveData.observe(this) {
-            newsAdapter.setNews(it)
+        this.lifecycleScope.launch {
+            searchViewModel.results
+                .flowWithLifecycle(
+                    this@SearchActivity.lifecycle,
+                    Lifecycle.State.STARTED
+                )
+                .distinctUntilChanged()
+                .collect { list ->
+                    newsAdapter.setNews(list)
+                }
+        }
+
+        val editText = findViewById<EditText>(R.id.editText)
+        editText.addTextChangedListener { text ->
+            if (text.toString() != "") {
+                searchViewModel.setQuery(text.toString())
+            } else newsAdapter.setNews(emptyList())
         }
     }
 }
