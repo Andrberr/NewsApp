@@ -2,6 +2,8 @@ package com.example.feature.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
@@ -36,22 +38,14 @@ class SearchActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
-        this.lifecycleScope.launch {
-            searchViewModel.results
-                .flowWithLifecycle(
-                    this@SearchActivity.lifecycle,
-                    Lifecycle.State.STARTED
-                )
-                .distinctUntilChanged()
-                .collect { list ->
-                    newsAdapter.setNews(list)
-                }
+        searchViewModel.liveData.observe(this) {
+            newsAdapter.setNews(it)
         }
 
         val editText = findViewById<EditText>(R.id.editText)
         editText.addTextChangedListener { text ->
             if (text.toString() != "") {
-                searchViewModel.setQuery(text.toString())
+                searchViewModel.getNews(text.toString())
             } else newsAdapter.setNews(emptyList())
         }
     }

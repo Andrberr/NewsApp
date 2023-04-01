@@ -1,11 +1,10 @@
 package com.example.data.models
-
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 data class NewsResponse(
-    @SerializedName("author") val author: String? = null,
-    @SerializedName("title") val title: String? = null,
-    @SerializedName("description") val description: String? = null,
-    @SerializedName("url") val link: String? = null,
-    @SerializedName("urlToImage") val imageUrl: String? = null
+    @Json(name = "author") val author: String? = null,
+    @Json(name = "title") val title: String? = null,
+    @Json(name = "description") val description: String? = null,
+    @Json(name = "url") val link: String? = null,
+    @Json(name = "urlToImage") val imageUrl: String? = null
 )
