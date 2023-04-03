@@ -33,7 +33,7 @@ class SearchViewModel @Inject constructor(
 
     private fun observeSearch(){
         val disposable = publishSubject
-            .delay(500L, TimeUnit.MILLISECONDS)
+            .debounce(1000L, TimeUnit.MILLISECONDS)
             .switchMapSingle {
                  repository.getNewsList(it)
             }
