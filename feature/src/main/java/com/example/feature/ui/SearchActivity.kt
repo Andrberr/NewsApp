@@ -45,7 +45,7 @@ class SearchActivity : AppCompatActivity() {
         val editText = findViewById<EditText>(R.id.editText)
         editText.addTextChangedListener { text ->
             if (text.toString() != "") {
-                searchViewModel.getNews(text.toString())
+                searchViewModel.getSearchingNews(text.toString())
             } else newsAdapter.setNews(emptyList())
         }
     }

@@ -8,6 +8,8 @@ import com.example.domain.models.News
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
@@ -19,11 +21,27 @@ class SearchViewModel @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun getNews(query: String) {
-        val disposable = repository.getNewsList(query)
+    private val publishSubject =  PublishSubject.create<String>()
+
+    init{
+        observeSearch()
+    }
+
+    fun getSearchingNews(query: String) {
+        publishSubject.onNext(query)
+    }
+
+    private fun observeSearch(){
+        val disposable = publishSubject
+            .delay(500L, TimeUnit.MILLISECONDS)
+            .switchMapSingle {
+                 repository.getNewsList(it)
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { value -> _liveData.value = value }
+            .subscribe{
+                _liveData.value = it
+            }
         compositeDisposable.add(disposable)
     }
 

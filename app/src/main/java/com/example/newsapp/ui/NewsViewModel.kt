@@ -7,6 +7,7 @@ import com.example.domain.Repository
 import com.example.domain.models.News
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -25,7 +26,7 @@ class NewsViewModel @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     fun getNewsList() {
-        var disposable = repository.getNewsFromApi("b")
+        val disposable = repository.getNewsFromApi("b")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()
@@ -34,19 +35,22 @@ class NewsViewModel @Inject constructor(
 
         _loadingLiveData.value = true
         _errorLiveData.value = false
-        disposable = repository.getNewsFromDataBase()
+
+        compositeDisposable.add(getDataBaseDisposable())
+    }
+
+    private fun getDataBaseDisposable(): Disposable {
+        return repository.getNewsFromDataBase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                _errorLiveData.value = true
-                _loadingLiveData.value = false
-            }
-            .subscribe {
+            .subscribe({
                 _newsLiveData.value = it
                 _loadingLiveData.value = false
-            }
-
-        compositeDisposable.add(disposable)
+            },
+                {
+                    _errorLiveData.value = true
+                    _loadingLiveData.value = false
+                })
     }
 
     override fun onCleared() {
