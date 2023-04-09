@@ -16,12 +16,26 @@ android {
         versionCode 1
         versionName "1.0"
 
+        flavorDimensions "version"
+        productFlavors {
+            free {
+                dimension "version"
+                applicationIdSuffix ".free"
+                versionNameSuffix "-free"
+            }
+            pro {
+                dimension "version"
+                applicationIdSuffix ".pro"
+                versionNameSuffix "-pro"
+            }
+        }
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
